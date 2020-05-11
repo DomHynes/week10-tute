@@ -93,7 +93,7 @@ jobs:
           name: upgrade database
           command: |
             kubectl exec deployment/tech-test-app -n test -- ./TechTestApp updatedb -s
-            deploy-test:
+  deploy-prod:
     docker:
       - image: cimg/base:2020.01
     environment:
@@ -125,6 +125,10 @@ workflows:
       - deploy-test:
           requires:
             - build
-      - deploy-prod:
+      - approval:
+          type: approval
           requires:
             - deploy-test
+      - deploy-prod:
+          requires:
+            - approval
