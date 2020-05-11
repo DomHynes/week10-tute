@@ -89,6 +89,6 @@ workflows:
   pipeline:
     jobs:
       - build
-      - deploy-test
-        requires:
-          - build
+      - deploy-test:
+          requires:
+            - build
